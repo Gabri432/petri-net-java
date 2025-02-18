@@ -1,8 +1,11 @@
 package org.gabriMiao.personal.interfaces;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
+
 public interface PetriNet {
 
-    boolean checkForIdentifier(Identifier identifier);
-    boolean isLimited();
-    boolean isConservative();
+    void fireTransition(@NotNull String transitionName);
+    boolean isStrictlyConservative();
 }
