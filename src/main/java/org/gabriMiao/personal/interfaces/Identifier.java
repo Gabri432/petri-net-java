@@ -1,6 +1,6 @@
 package org.gabriMiao.personal.interfaces;
 
 public interface Identifier {
-    boolean isPlace();
-    boolean isTransition();
+    Arch[] preSet();
+    Arch[] postSet();
 }
