@@ -1,6 +1,7 @@
 package org.gabriMiao.personal.interfaces;
 
+import org.jetbrains.annotations.NotNull;
+
 public interface Transition {
-    boolean isEnabled();
-    void fire();
+    @NotNull String name();
 }

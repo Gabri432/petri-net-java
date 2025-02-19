@@ -1,0 +1,111 @@
+package org.gabriMiao.personal.classes;
+
+import org.gabriMiao.personal.interfaces.*;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.HashSet;
+import java.util.Set;
+
+public class ConcretePetriNet implements PetriNet {
+    private final @NotNull Set<Place> places;
+    private final @NotNull Set<Transition> transitions;
+    private final @NotNull Set<IncomingArch> incomingArches;
+    private final @NotNull Set<OutgoingArch> outgoingArches;
+    private final @NotNull String name;
+
+    private ConcretePetriNet(Builder builder) {
+        this.name = builder.name;
+        this.places = builder.places;
+        this.transitions = builder.transitions;
+        this.incomingArches = builder.incomingArches;
+        this.outgoingArches = builder.outgoingArches;
+    }
+
+    public static class Builder implements PetriNetBuilder {
+        @NotNull String name = "My Petri Net";
+        @NotNull Set<Place> places = new HashSet<>();
+        @NotNull Set<Transition> transitions = new HashSet<>();
+        @NotNull Set<IncomingArch> incomingArches = new HashSet<>();
+        @NotNull Set<OutgoingArch> outgoingArches = new HashSet<>();
+
+        @Override
+        public void setPetriNetName(@NotNull String name) {
+            if (!name.isBlank()) this.name = name;
+        }
+
+        @Override
+        public void createPlace(@NotNull String name, int tokens) {
+            if (!name.isBlank() && tokens > 0) this.places.add(new ConcretePlace(name, tokens));
+        }
+
+        @Override
+        public void createTransition(@NotNull String name) {
+            if (!name.isBlank()) this.transitions.add(new ConcreteTransition(name));
+        }
+
+        @Override
+        public void createArch(int weight, @NotNull Place place, @NotNull Transition transition, boolean isEnteringTrans) {
+            if (weight <= 0) return;
+            if (!this.places.contains(place)) return;
+            if (!this.transitions.contains(transition)) return;
+            if (isEnteringTrans) {
+                IncomingArch arch = new ConcreteIncomingArch(weight, place, transition);
+                incomingArches.add(arch);
+            }
+            if (!isEnteringTrans) {
+                OutgoingArch arch = new ConcreteOutgoingArch(weight, place, transition);
+                outgoingArches.add(arch);
+            }
+        }
+
+        public PetriNet build() {
+            return new ConcretePetriNet(this);
+        }
+    }
+
+    @Override
+    public void fireTransition(@NotNull String transitionName) {
+        for (Transition transition : transitions) {
+            if (transition.name().equals(transitionName) && isEnabled(transition)) {
+                this.updatePlaces(transition);
+                break;
+            }
+        }
+    }
+
+    private boolean isEnabled(Transition t) {
+        for (IncomingArch incomingArch : incomingArches) {
+            int weight = incomingArch.weight();
+            Place place = incomingArch.getEntryPoint();
+            Transition transition = incomingArch.getExitPoint();
+            if (transition.equals(t) && weight > place.tokens()) return false;
+        }
+        return true;
+    }
+
+    private void updatePlaces(Transition transition) {
+        for (IncomingArch incomingArch : incomingArches) {
+            int weight = incomingArch.weight();
+            Place place = incomingArch.getEntryPoint();
+            if (incomingArch.getExitPoint().equals(transition)) {
+                this.places.remove(place);
+                place.fireTokens(weight);
+                this.places.add(place);
+            }
+        }
+        for (OutgoingArch outgoingArch : outgoingArches) {
+            int weight = outgoingArch.weight();
+            Place place = outgoingArch.getExitPoint();
+            if (outgoingArch.getEntryPoint().equals(transition)) {
+                this.places.remove(place);
+                place.addTokens(weight);
+                this.places.add(place);
+            }
+        }
+    }
+
+    @Override
+    public boolean isStrictlyConservative() {
+        return false;
+    }
+}
