@@ -46,6 +46,6 @@ public class ConcretePlace implements Place {
 
     @Override
     public String toString() {
-        return "Place: "+name+" Tokens: "+tokens;
+        return name+" : "+tokens;
     }
 }

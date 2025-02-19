@@ -108,4 +108,18 @@ public class ConcretePetriNet implements PetriNet {
     public boolean isStrictlyConservative() {
         return false;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder s = new StringBuilder();
+        s.append("Net name: ").append(name).append("\n");
+        s.append("Incoming arches: ").append("\n");
+        for (IncomingArch incomingArch : incomingArches) {
+            s.append(incomingArch).append("\n");
+        }
+        for (OutgoingArch outgoingArch : outgoingArches) {
+            s.append(outgoingArch).append("\n");
+        }
+        return s.toString();
+    }
 }
