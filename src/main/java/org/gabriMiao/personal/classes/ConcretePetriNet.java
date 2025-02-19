@@ -34,26 +34,20 @@ public class ConcretePetriNet implements PetriNet {
         }
 
         @Override
-        public void createPlace(@NotNull String name, int tokens) {
-            if (!name.isBlank() && tokens > 0) this.places.add(new ConcretePlace(name, tokens));
-        }
-
-        @Override
-        public void createTransition(@NotNull String name) {
-            if (!name.isBlank()) this.transitions.add(new ConcreteTransition(name));
-        }
-
-        @Override
-        public void createArch(int weight, @NotNull Place place, @NotNull Transition transition, boolean isEnteringTrans) {
+        public void createArch(int weight, @NotNull String placeName, int tokens, @NotNull String transitionName, boolean isEnteringTrans) {
             if (weight <= 0) return;
-            if (!this.places.contains(place)) return;
-            if (!this.transitions.contains(transition)) return;
+            Place p = new ConcretePlace(name, tokens);
+            if (this.places.contains(p) || !name.isBlank() || tokens > 0) return;
+            Transition t = new ConcreteTransition(name);
+            if (this.transitions.contains(t) || !name.isBlank()) return;
+            this.places.add(p);
+            this.transitions.add(t);
             if (isEnteringTrans) {
-                IncomingArch arch = new ConcreteIncomingArch(weight, place, transition);
+                IncomingArch arch = new ConcreteIncomingArch(weight, p, t);
                 incomingArches.add(arch);
             }
             if (!isEnteringTrans) {
-                OutgoingArch arch = new ConcreteOutgoingArch(weight, place, transition);
+                OutgoingArch arch = new ConcreteOutgoingArch(weight, p, t);
                 outgoingArches.add(arch);
             }
         }
