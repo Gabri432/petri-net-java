@@ -37,16 +37,15 @@ public class ConcretePetriNet implements PetriNet {
         public void createArch(int weight, @NotNull String placeName, int tokens, @NotNull String transitionName, boolean isEnteringTrans) {
             if (weight <= 0) return;
             Place p = new ConcretePlace(placeName, tokens);
-            if (this.places.contains(p) || placeName.isBlank() || tokens < 0) return;
+            if (placeName.isBlank() || tokens < 0) return;
             Transition t = new ConcreteTransition(transitionName);
-            if (this.transitions.contains(t) || transitionName.isBlank()) return;
+            if (transitionName.isBlank()) return;
             this.places.add(p);
             this.transitions.add(t);
             if (isEnteringTrans) {
                 IncomingArch arch = new ConcreteIncomingArch(weight, p, t);
                 incomingArches.add(arch);
-            }
-            if (!isEnteringTrans) {
+            }else {
                 OutgoingArch arch = new ConcreteOutgoingArch(weight, p, t);
                 outgoingArches.add(arch);
             }
