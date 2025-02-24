@@ -61,8 +61,8 @@ public class Main {
 ```
 Build the arches of the net, starting from its weight, the name of the place, the tokens of the place, the name of the transition and whether such arch is incoming or outgoing.
 
-If `true` then it will be incoming, so it will start from the place and end in the transition.
-If `false` then it will be outgoing, so it will start from the transition and end in the place.
+If `true` then it will be incoming, that is, will start from the place and end in the transition.
+If `false` then it will be outgoing, that is, will start from the transition and end in the place.
 ```java
 public class Main {
     public static void main(String[] args) {
