@@ -32,6 +32,6 @@ public class ConcreteIncomingArch implements IncomingArch {
 
     @Override
     public String toString() {
-        return place.getName()+" --"+weight+"--> "+transition.name();
+        return place+" --"+weight+"--> "+transition.name();
     }
 }

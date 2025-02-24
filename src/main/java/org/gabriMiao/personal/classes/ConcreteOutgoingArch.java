@@ -32,6 +32,6 @@ public class ConcreteOutgoingArch implements OutgoingArch {
 
     @Override
     public String toString() {
-        return transition.name()+" --"+weight+"--> "+place.getName();
+        return transition.name()+" --"+weight+"--> "+place;
     }
 }
