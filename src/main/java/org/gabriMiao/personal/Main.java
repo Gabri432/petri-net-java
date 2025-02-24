@@ -12,5 +12,7 @@ public class Main {
         builder.createArch(1, "p2", 0, "t1", false);
         PetriNet pNet = builder.build();
         System.out.println(pNet);
+        pNet.fireTransition("t1");
+        System.out.println(pNet);
     }
 }
