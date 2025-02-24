@@ -132,3 +132,8 @@ In this case, after firing the transition t1 once, the next marking will be:
 Current Marking:
 (p1 : 1)(p2 : 1)
 ```
+
+## Extra notes
+- This project is under the [Apache license 2.0](https://github.com/Gabri432/petri-net-java/blob/main/license);
+- This project was developed with IntelliJ Community Edition, Java 17, and Gradle 8.11;
+- This project was intended for learning/education purposes, therefore it does not claim to be the most efficient/convenient solution/implementation;
