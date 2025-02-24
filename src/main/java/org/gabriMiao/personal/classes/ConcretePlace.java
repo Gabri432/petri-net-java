@@ -36,12 +36,13 @@ public class ConcretePlace implements Place {
     @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof ConcretePlace concretePlace)) return false;
+        if (concretePlace.tokens != tokens) return false;
         return concretePlace.name.equals(name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(name, tokens);
     }
 
     @Override
