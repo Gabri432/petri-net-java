@@ -68,8 +68,8 @@ public class Main {
     public static void main(String[] args) {
         PetriNetBuilder builder = new ConcretePetriNet.Builder();
         builder.setPetriNetName("My Java Petri Net");
-        builder.createArch(1, "p1", 2, "t1", true); //Incoming arch of weight 1, with p1 having 2 tokens
-        builder.createArch(1, "p2", 0, "t1", false); //Outgoing arch of weight 1, with p2 having 0 tokens
+        builder.createArch(1, "p1", 2, "t1", true); //Incoming arch of weight 1, with p1 having 2 tokens, ends in t1
+        builder.createArch(1, "p2", 0, "t1", false); //Outgoing arch of weight 1, with p2 having 0 tokens, starts from t1
         //...
     }
 }
