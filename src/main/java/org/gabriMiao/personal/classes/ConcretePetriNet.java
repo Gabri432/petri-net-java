@@ -67,6 +67,11 @@ public class ConcretePetriNet implements PetriNet {
         }
     }
 
+    @Override
+    public Set<Place> getCurrentMarking() {
+        return new HashSet<>(places);
+    }
+
     private boolean isEnabled(Transition t) {
         for (IncomingArch incomingArch : incomingArches) {
             int weight = incomingArch.weight();
