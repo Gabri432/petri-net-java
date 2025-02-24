@@ -99,11 +99,6 @@ public class ConcretePetriNet implements PetriNet {
     }
 
     @Override
-    public boolean isStrictlyConservative() {
-        return false;
-    }
-
-    @Override
     public String toString() {
         StringBuilder s = new StringBuilder();
         s.append("Net name: ").append(name).append("\n");
