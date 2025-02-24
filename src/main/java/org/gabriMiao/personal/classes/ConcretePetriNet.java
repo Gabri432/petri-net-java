@@ -110,6 +110,11 @@ public class ConcretePetriNet implements PetriNet {
         for (OutgoingArch outgoingArch : outgoingArches) {
             s.append(outgoingArch).append("\n");
         }
+        s.append("Current Marking: ").append("\n");
+        for (Place place : places) {
+            s.append(place);
+        }
+        s.append("\n");
         return s.toString();
     }
 }
